@@ -21,16 +21,17 @@ public class TodoUtil {
 				StringTokenizer st = new StringTokenizer(oneline, "##");
 				String category = st.nextToken();
 				String title = st.nextToken();
+				String comp = st.nextToken();
 				String desc = st.nextToken();
 				String due_date = st.nextToken();
 				String current_date = st.nextToken();
 				
 				TodoItem t = new TodoItem(title, desc, category, due_date);
 				t.setCurrent_date(current_date);
-//				if (l.isDuplicate(title)) {
-//					return;
-//				}
-//				else 
+				if (l.isDuplicate(title)) {
+					return;
+				}
+				else 
 				l.addItem(t);
 			}
 			in.close();
@@ -77,7 +78,7 @@ public class TodoUtil {
 		
 		System.out.print("마감일자 > ");
 		due_date = sc.nextLine().trim();
-		
+				
 		TodoItem t = new TodoItem(title, desc, category, due_date);
 		if(l.addItem(t) > 0)
 			System.out.println("추가되었습니다.");
@@ -105,7 +106,7 @@ public class TodoUtil {
 		int index = sc.nextInt();
 		
 		System.out.print("새 제목 > ");
-		new_title = sc.nextLine();
+		new_title = sc.next();
 		
 		System.out.print("새 카테고리 > ");
 		new_category = sc.nextLine();
@@ -166,7 +167,8 @@ public class TodoUtil {
 		System.out.printf("[전체 목록, 총 %d개]\n", l.getCount());
 		
 		for (TodoItem item : l.getList()) {
-			System.out.println(item.toString());
+			i++;
+			System.out.println(i + ". " + item.toString());
 		}
 	}
 	public static void listCateAll(TodoList l) {
@@ -188,11 +190,31 @@ public class TodoUtil {
 	}
 	
 	public static void listAll(TodoList l, String orderby, int ordering) {
+		int i = 0;
 		System.out.printf("[전체 목록, 총 %d개]\n", l.getCount());
 		for (TodoItem item : l.getOrderedList(orderby, ordering)) {
-			System.out.println(item.toString());
+			i++;
+			System.out.println(i + ". " + item.toString());
 		}
 	}
+	
+	public static void checkComp(TodoList l, int comp) {
+		if (l.completed(comp) > 0) {
+			System.out.println("완료로 체크되었습니다.");
+			}
+	}
+
+	public static void listComp(TodoList l) {
+		int count = 0;
+		for (TodoItem item : l.getList()) {
+			if(item.getIsComp() == 1) {
+			System.out.println(item.toString());
+			count++;
+			}
+		}
+		System.out.printf("\n총 %d개의 항목이 완료되었습니다.", count);
+	}
+	
 }
 
 

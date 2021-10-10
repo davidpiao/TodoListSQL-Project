@@ -35,8 +35,17 @@ public class TodoMain {
 				TodoUtil.updateItem(l);
 				break;
 				
+			case "comp":
+				int comp = sc.nextInt();
+				TodoUtil.checkComp(l, comp);
+				break;
+				
 			case "ls":
 				TodoUtil.listAll(l);
+				break;
+				
+			case "ls_comp":
+				TodoUtil.listComp(l);
 				break;
 
 			case "ls_name":

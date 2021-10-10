@@ -253,4 +253,20 @@ public class TodoList {
 		}
 		return false;
 	}
+	
+	public int completed(int comp) {
+		String sql = "update list set is_completed=? " + "where id = ?;";
+		PreparedStatement pstmt;
+		int count = 0;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1,1);
+			pstmt.setInt(2,comp);
+			count = pstmt.executeUpdate();
+			pstmt.close();
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return count;
+	}
 }

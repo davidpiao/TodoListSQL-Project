@@ -9,14 +9,25 @@ public class TodoItem {
     private String current_date;
     private String category;
     private String due_date;
+    private int comp;
     private int number;
 
 
-	public TodoItem(String title, String desc, String category, String due_date){
+    public TodoItem(String title, String desc, String category, String due_date){
         this.title=title;
         this.desc=desc;
         this.category=category;
         this.due_date=due_date;
+        SimpleDateFormat f = new SimpleDateFormat("yyyy/MM/dd kk:mm:ss");
+        this.current_date = f.format(new Date());
+    }
+    
+	public TodoItem(String title, String desc, String category, String due_date, int comp){
+        this.title=title;
+        this.desc=desc;
+        this.category=category;
+        this.due_date=due_date;
+        this.comp=comp;
         SimpleDateFormat f = new SimpleDateFormat("yyyy/MM/dd kk:mm:ss");
         this.current_date = f.format(new Date());
     }
@@ -69,6 +80,14 @@ public class TodoItem {
 	public void setDue_date(String due_date) {
 		this.due_date = due_date;
 	}
+	
+	public int getIsComp() {
+		return comp;
+	}
+
+	public void setIsComp(int comp) {
+		this.comp = comp;
+	}
 
 	public String toSaveString() {
     	return category + "##" + title + "##" + desc + "##" + due_date + "##" + current_date + "\n";
@@ -76,10 +95,13 @@ public class TodoItem {
     
     @Override
     public String toString() {
-    	return "[" + category + "]" + " " + title + " - " + desc + " - " + due_date + " - " + current_date;
+    	if (comp == 0) return "[" + category + "]" + " " + title + "[V]" + " - " + desc + " - " + due_date + " - " + current_date;
+    	else return "[" + category + "]" + " " + title + " - " + desc + " - " + due_date + " - " + current_date;
     }
     
     public String findString() {
     	return category + title + desc + due_date + current_date;
     }
+    
+    
 }
