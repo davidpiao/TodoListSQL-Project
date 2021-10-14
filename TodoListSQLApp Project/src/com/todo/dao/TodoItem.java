@@ -20,6 +20,7 @@ public class TodoItem {
         this.due_date=due_date;
         SimpleDateFormat f = new SimpleDateFormat("yyyy/MM/dd kk:mm:ss");
         this.current_date = f.format(new Date());
+        this.comp = 0;
     }
     
 	public TodoItem(String title, String desc, String category, String due_date, int comp){
@@ -95,13 +96,11 @@ public class TodoItem {
     
     @Override
     public String toString() {
-    	if (comp == 0) return "[" + category + "]" + " " + title + "[V]" + " - " + desc + " - " + due_date + " - " + current_date;
+    	if (this.comp == 1) return "[" + category + "]" + " " + title + "[V]" + " - " + desc + " - " + due_date + " - " + current_date;
     	else return "[" + category + "]" + " " + title + " - " + desc + " - " + due_date + " - " + current_date;
     }
     
     public String findString() {
     	return category + title + desc + due_date + current_date;
     }
-    
-    
 }

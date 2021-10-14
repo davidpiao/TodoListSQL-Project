@@ -86,7 +86,8 @@ public class TodoList {
             String description = rs.getString("memo");
             String due_date = rs.getString("due_date");
             String current_date = rs.getString("current_date");
-            TodoItem t = new TodoItem(title, description, category, due_date);
+            int comp = rs.getInt("is_completed");
+            TodoItem t = new TodoItem(title, description, category, due_date, comp);
             t.setNumber(id);
             t.setCurrent_date(current_date);
             list.add(t);
@@ -255,18 +256,42 @@ public class TodoList {
 	}
 	
 	public int completed(int comp) {
-		String sql = "update list set is_completed=? " + "where id = ?;";
+		String sql = "update list set is_completed = 1 " + "where id = " + comp;
 		PreparedStatement pstmt;
 		int count = 0;
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1,1);
-			pstmt.setInt(2,comp);
 			count = pstmt.executeUpdate();
 			pstmt.close();
 		} catch(SQLException e) {
 			e.printStackTrace();
 		}
 		return count;
+	}
+	public ArrayList<TodoItem> getCompList() {
+		ArrayList<TodoItem> list = new ArrayList<TodoItem>();
+		Statement stmt;
+		try {
+			stmt = conn.createStatement();
+			String sql = "SELECT * FROM list WHERE is_completed == 1;";
+			ResultSet rs = stmt.executeQuery(sql);
+			while(rs.next()) {
+				int id = rs.getInt("id");
+				String category = rs.getString("category");
+				String title = rs.getString("title");
+				String description = rs.getString("memo");
+				String due_date = rs.getString("due_date");
+				String current_date = rs.getString("current_date");
+				int is_completed = rs.getInt("is_completed");
+				TodoItem t = new TodoItem(title, description, category, due_date);
+				t.setNumber(id);
+				t.setIsComp(is_completed);
+				list.add(t);
+			}
+			stmt.close();
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 }

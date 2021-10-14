@@ -199,14 +199,12 @@ public class TodoUtil {
 	}
 	
 	public static void checkComp(TodoList l, int comp) {
-		if (l.completed(comp) > 0) {
-			System.out.println("완료로 체크되었습니다.");
-			}
+		if (l.completed(comp) > 0) System.out.println("완료로 체크하였습니다.");
 	}
 
 	public static void listComp(TodoList l) {
 		int count = 0;
-		for (TodoItem item : l.getList()) {
+		for (TodoItem item : l.getCompList()) {
 			if(item.getIsComp() == 1) {
 			System.out.println(item.toString());
 			count++;
